@@ -18,10 +18,19 @@ router.get("/", (req, res) => {
 // Get Method To Single Project
 
 router.get("/:id", validateProjectId, (req, res) => {
-  console.log(req);
   const id = req.params.id;
   db.get(id).then(resource => {
     res.status(200).json(resource);
+  });
+});
+
+// Get all actions for specific project ID
+
+router.get("/:id/specificactions", validateProjectId, (req, res) => {
+  const id = req.params.id;
+  db.getProjectActions(id).then(resources => {
+    console.log(resources);
+    res.status(200).json(resources);
   });
 });
 
@@ -65,7 +74,6 @@ router.put("/:id", (req, res) => {
 
 router.delete("/:id", (req, res) => {
   const project = req;
-  console.log(project);
   const id = req.params.id;
   db.remove(id)
     .then(result => {
